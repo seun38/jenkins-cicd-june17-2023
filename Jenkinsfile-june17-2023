@@ -1,0 +1,53 @@
+pipeline{
+    agent  any 
+    tools {
+        maven "maven3.9.2"
+    }
+
+    stages{
+        stage('checkoutfromsourcecode'){
+            steps{
+                sh "echo 'today is june 17 bulding pipelines for welcomeapp'"
+                git 'https://github.com/Lion-Technology-Solutions/jenkins-cicd-june17-2023.git'
+            }
+        }
+
+        stage('Test+package+build'){
+
+            steps{
+
+                sh "echo  'maven being used as our build'"
+                sh "echo   'Liontechengineers on the move'"
+                sh "mvn test"
+                sh "mvn  validate"
+                sh "mvn clean package"
+            }
+        }
+
+        stage('codequality+analysis'){
+            steps{
+                sh "echo 'Running continouse feedback and testing'  "
+                sh "mvn sonar:sonar"
+            }
+        }
+
+        stage('upload artifact to nexus'){
+            steps{
+                sh "echo 'upload build artificat into nexus'"
+                sh "mvn deploy"
+            }
+        }
+
+        stage('deploy to test environment'){
+            steps{
+                sh "echo 'deploying to tomca'"
+
+            }
+        }
+    }
+
+    
+
+
+
+}
