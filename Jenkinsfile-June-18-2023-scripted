@@ -11,11 +11,11 @@ node{
     }
 
     stage('3-codequalitty-analysis'){
-        sh "${maveHome}/bin/mvn sonar:sonar"
+        sh "${mavenHome}/bin/mvn sonar:sonar"
     }
 
     stage('4-upload-2-nexus'){
-        sh "${maveHome}/bin/mvn deploy"
+        sh "${mavenHome}/bin/mvn deploy"
     }
     stage('deploy-dev'){
         sh "echo 'deploy to dev environment'"
