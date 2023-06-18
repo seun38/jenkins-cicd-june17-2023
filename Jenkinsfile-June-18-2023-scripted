@@ -1,0 +1,58 @@
+node{
+
+    def  mavenHome   =  tool name :  'maven3.9.2'
+    stage('1-clone the code'){
+        git 'https://github.com/Lion-Technology-Solutions/jenkins-cicd-june17-2023.git'
+
+    }
+
+    stage('2-Build and Test'){
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+
+    stage('3-codequalitty-analysis'){
+        sh "${maveHome}/bin/mvn sonar:sonar"
+    }
+
+    stage('4-upload-2-nexus'){
+        sh "${maveHome}/bin/mvn deploy"
+    }
+    stage('deploy-dev'){
+        sh "echo 'deploy to dev environment'"
+        deploy adapters: [tomcat9(credentialsId: 'tomcat-deploy', path: '', url: 'http://44.208.161.47:8009/')], contextPath: 'dev', war: 'target/*.war'
+    }
+
+    stage('approvalgate'){
+        sh "echo 'please contact Desmond for approval'"
+        timeout(time:5, unit: 'DAYS'){
+            input message:  'Approve application ready for deployment to dev'
+
+
+        }
+
+    }
+
+    stage('deploy-to-staging'){
+        deploy adapters: [tomcat9(credentialsId: 'tomcat-deploy', path: '', url: 'http://44.208.161.47:8009/')], contextPath: 'stagin-environment', war: 'target/*.war'
+    }
+
+    stage('approvalgate'){
+        sh "echo 'please contact Desmond for approval'"
+        timeout(time:10, unit: 'DAYS'){
+            input message:  'Approve application ready for deployment to prod'
+     }
+
+}
+
+ stage('deploy to prod'){
+
+    deploy adapters: [tomcat9(credentialsId: 'tomcat-deploy', path: '', url: 'http://44.208.161.47:8009/')], contextPath: 'production-environment', war: 'target/*.war'
+ }
+
+ stage('send ms teams notification'){
+
+    office365ConnectorSend message: 'congratulations-to-classs20', webhookUrl: 'https://liontechacademy.webhook.office.com/webhookb2/1c45852e-99e7-4aa7-a7f5-be60526bb887@b290c85e-0692-4ada-8f25-2a3b60aca73e/JenkinsCI/38f55bedaf4142bc8366233b562335b3/90dc930a-1d3a-4c50-9c2d-39d010312f55'
+ }
+
+
+}
