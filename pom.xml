@@ -96,13 +96,13 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>LION TECH ACADEMY Releases Nexus Repository</name>
-	      <url>http://3.89.252.44:8081/repository/june17-welcomapp-release/</url>
+	      <url>http://52.91.26.176:8081/repository/june18-release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>LION TECH ACADEMY Snapshot Nexus Repository </name>
-	      <url>http://3.89.252.44:8081/repository/june17-welapp-snapshot/</url>
+	      <url>http://52.91.26.176:8081/repository/june18-snapshot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
