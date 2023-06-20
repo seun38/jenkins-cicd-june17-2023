@@ -3,6 +3,9 @@ This engineer Desmond -  build a new version of our application
 Added the sonarqube continuouse testing step
 
 
+
+
+
          <server>
             <id>nexus</id>
              <username>liontech</username>
