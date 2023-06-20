@@ -19,7 +19,7 @@ pipeline{
             steps{
 
                 sh "echo  'maven being used as our build'"
-                sh "echo   'Liontechengineers on the move'"
+                sh "echo  'Liontechengineers on the move'"
                 sh "mvn test"
                 sh "mvn  validate"
                 sh "mvn clean package"
